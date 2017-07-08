@@ -4,6 +4,8 @@ This is as example of how to solve a supervised learning problem using the ```su
 
 ## Install
 
+Clone this repo then:
+
 ```
 npm install
 ```
