@@ -23,4 +23,4 @@ const extractors = [
 
 const set = toolkit.buildFeatureExtractorSet(extractors);
 
-combination.execute([set, set2]);
+combination.execute([set]);

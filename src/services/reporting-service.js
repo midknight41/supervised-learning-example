@@ -69,9 +69,7 @@ class ReportingService {
       const key = item[0];
 
       const diff = Math.abs(data[0].percentage - data[1].percentage);
-      console.log("%", data[0].percentage, data[1].percentage, data[0].percentage + data[1].percentage - diff);
       const ranking = (data[0].percentage + data[1].percentage - diff) / 2;
-
 
       overall.push({ ranking, diff, key, "M": item[1][0].percentage, "F": item[1][1].percentage });
 
