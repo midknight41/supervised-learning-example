@@ -1,19 +1,32 @@
+const _ = require("lodash");
+
 function create(modifier) {
 
-  return function grabFirstLetters(tokens) {
-    return checkForGenderMarkers(tokens, modifier);
-  };
+  return checkForGenderMarkers;
 
 }
 
 function checkForGenderMarkers(tokens) {
 
+  const item = tokens[0].toLowerCase();
+
   const maleMarker = ["tian", "tien", "no"];
-  const femaleMarker = ["na", "tte", "ty"];
+  const femaleMarker = ["na", "tte", "ty", "ra", "ya", "fy", "la"];
 
-  //TODO: find markers
+  for (const entry of maleMarker) {
 
-  return [`bias-${number}:${beginning}`];
+    if (_.endsWith(item, entry)) {
+      return ["bias:M"];
+    }
+  }
+
+  for (const entry of femaleMarker) {
+    if (_.endsWith(item, entry)) {
+      return ["bias:F"];
+    }
+  }
+
+  return [];
 
 }
 

@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const fs = require("fs");
 
 class ReportingService {
 
@@ -35,8 +36,9 @@ class ReportingService {
 
     const extractComparison = [];
 
-    for (const { group, percentage } of results) {
-      const item = { extractors, group, percentage };
+    for (const { group, percentage, errors } of results) {
+
+      const item = { extractors, group, percentage, errors };
       this.groupMap_.get(group).push(item);
       extractComparison.push(item);
     }
@@ -69,9 +71,9 @@ class ReportingService {
       const key = item[0];
 
       const diff = Math.abs(data[0].percentage - data[1].percentage);
-      const ranking = (data[0].percentage + data[1].percentage - diff) / 2;
+      const ranking = (data[0].percentage + data[1].percentage) / 2  - diff;
 
-      overall.push({ ranking, diff, key, "M": item[1][0].percentage, "F": item[1][1].percentage });
+      overall.push({ ranking, diff, key, "M": data[0].percentage, "F": data[1].percentage });
 
     }
 
@@ -79,10 +81,19 @@ class ReportingService {
       return b.ranking - a.ranking;
     });
 
-    overall = overall.slice(0,10);
+    overall = overall.slice(0, 10);
 
     console.log("overall top result", overall);
 
+    const topResult = this.groupCompare_.get(overall[0].key);
+
+    console.log("writing error reports...");
+
+    for (const { group, errors } of topResult) {
+
+      fs.writeFileSync(`./results/${group}-errors.json`, JSON.stringify(errors));
+
+    }
 
   }
 

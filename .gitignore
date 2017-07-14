@@ -81,6 +81,9 @@ test/*.js
 # coverage reports
 coverage
 
+#error reports
+results
+
 # visual studio database projects
 *.dbmdl
 

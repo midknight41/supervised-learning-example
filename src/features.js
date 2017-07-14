@@ -5,6 +5,7 @@ const countLetters = require("./features/letter-counts");
 const vowelCounts = require("./features/vowel-counts");
 const nGrams = require("./features/n-grams");
 const phonetics = require("./features/phonetics");
+const genderBias = require("./features/gender-markers");
 
 const bucket = createFeatureExtractorBucket();
 
@@ -14,5 +15,6 @@ bucket.add("letter-counts", countLetters);
 bucket.add("vowel-counts", vowelCounts);
 bucket.add("n-grams", nGrams, [2, 3]);
 bucket.add("phonetics", phonetics);
+bucket.add("gender-bias", genderBias);
 
 exports.bucket = bucket;
