@@ -2,6 +2,8 @@
 
 This is as example of how to solve a supervised learning problem using the ```supervised-learning``` npm module. node.js and npm are pre-requisites to run it. 
 
+It aims to correctly identify whether a name is male or female.
+
 ## Install
 
 Clone this repo then:
