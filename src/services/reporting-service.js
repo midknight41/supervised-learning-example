@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const fs = require("fs");
+const Table = require("cli-table");
 
 class ReportingService {
 
@@ -71,9 +72,10 @@ class ReportingService {
       const key = item[0];
 
       const diff = Math.abs(data[0].percentage - data[1].percentage);
-      const ranking = (data[0].percentage + data[1].percentage) / 2  - diff;
+      const ranking = (data[0].percentage + data[1].percentage) / 2 - diff;
+      const score = (data[0].percentage + data[1].percentage) / 2;
 
-      overall.push({ ranking, diff, key, "M": data[0].percentage, "F": data[1].percentage });
+      overall.push({ ranking, score, diff, key, "M": data[0].percentage, "F": data[1].percentage });
 
     }
 
@@ -83,10 +85,26 @@ class ReportingService {
 
     overall = overall.slice(0, 10);
 
-    console.log("overall top result", overall);
+    console.log("");
+    
+    const table = new Table({
+      head: ["best feature combinations overall","ranking", "score", "M", "F", "diff"],
+      colWidths: [50, 15, 15, 15, 15, 15]
+    });
+
+    for(const {ranking, score, diff, key, M, F } of overall) {
+
+      let cleanKey = key;
+      cleanKey = cleanKey.replace(/},/g,"}\n");
+
+      table.push([cleanKey, ranking.toFixed(5), score.toFixed(5), M.toFixed(5), F.toFixed(5), diff.toFixed(5)]);
+    }
+
+    console.log(table.toString());
 
     const topResult = this.groupCompare_.get(overall[0].key);
 
+    console.log("");
     console.log("writing error reports...");
 
     for (const { group, errors } of topResult) {
@@ -108,11 +126,22 @@ class ReportingService {
 
     sorted = _.reverse(sorted).slice(0, 10);
 
-    console.log(`top results for group ${group}`);
+    console.log("");
+
+    const table = new Table({
+      head: [`best feature combinations for group "${group}"`, "percentage"],
+      colWidths: [50, 20]
+    });
 
     for (const { extractors, percentage } of sorted) {
-      console.log(JSON.stringify(extractors), percentage);
+
+      let cleanKey = JSON.stringify(extractors);
+      cleanKey = cleanKey.replace(/},/g,"}\n");
+
+      table.push([cleanKey, percentage.toFixed(5)]);
     }
+
+    console.log(table.toString());
 
   }
 

@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "one": "node ./src/one.js",
-    "all": "node ./src/index.js"
+    "all": "node ./src/index.js",
+    "a": "node ./src/last-letter.js",
+    "b": "node ./src/last-3.js",
+    "c": "node ./src/feature-combo.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cli-table": "^0.3.1",
     "csvtojson": "^1.1.4",
     "hoek": "^4.1.0",
     "lodash": "^4.17.4",

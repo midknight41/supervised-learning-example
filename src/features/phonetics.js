@@ -1,4 +1,4 @@
-const { Metaphone } = require('natural');
+const { Metaphone } = require("natural");
 
 function create(modifier) {
   return metaphoneFeature;
